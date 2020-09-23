@@ -50,33 +50,40 @@ def moveToFolder(folder_name, img_name, n):
     return
 
 
-
+# make_attrlist와 같은 기능을 함
 def make_categorylist():
-    categories = open(attr_path, 'r')
-    catelist = []
+    categories = open(cate_path, 'r')
+
+    # list_category_img.txt에서 index가 1부터 시작함
+    catelist = ['null']
+
     for i in range(CATEGORY_SIZE):
-        # 한 줄에 공백 없는 속성 이름만 적혀있다고 가정함
-        # ex) line1: 'check', line2: 'stripe'
+        # 한 줄에 공백 없는 카테고리 이름만 적혀있다고 가정함
+        # ex) line1: 'pants         2' line2: 'skirt         2'
         line = categories.readline()
         category = line[:line.find(' ')]
         catelist.append(category)
 
+    # category[index] = <카테고리 이름>
     return catelist
 
 
+# list_category_cloth로 폴더 나누기
 def cate_main():
     f= open(cate_img_path, 'r')
 
     catelist = make_categorylist()
-    index = 0
     n = 0
     while(True):
+
+        # ex) line1: img/<폴더 이름>/<사진 이름>.jpg               31 (
         line = f.readline()
         img_name = line[:line.find(' ')]
-        folder_name = catelist[index]
+        img_cate = line[line.rfind(' ')+1:]
+
+        folder_name = catelist[int(img_cate)]
         moveToFolder(folder_name, img_name, n)
         n = n+1
-        index = index+1
 
 
 
