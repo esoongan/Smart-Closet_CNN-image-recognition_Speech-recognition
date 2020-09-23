@@ -41,7 +41,7 @@ def moveToFolder(folder_name, img_name, n):
     # 이미지 파일의 이름 형식: img_00000001, img_00000002, ...
     # 그냥 폴더에 옮겨진 순서대로 번호가 매겨짐
     # (원래는 폴더별로 1부터 시작하지만 이런식으로 하려면 파일 개수 일일이 세야해서 과부하 위험 있음)
-    new_img_name = '/img_' + format(n, '08')+'.txt'         # .txt -> jpg로 바꿔야함
+    new_img_name = '/img_' + format(n, '08')+'.jpg'         # .txt -> jpg로 바꿔야함
 
     # 파일 이름을 위의 new_img_name으로 변경하고 속성별 폴더로 이동시키기
     shutil.move(src_path, dest_path+new_img_name)
