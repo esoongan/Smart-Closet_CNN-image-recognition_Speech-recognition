@@ -37,7 +37,8 @@ def crop_image():
         # cropImage 폴더 안에 다운받은 img파일 있으면 됨 !!
         image = Image.open('/Users/iseungjin/2020_3_2/capstone/cropImage/' + image_name)
         cropped_image = image.crop(tuple(image_val_list_int))
-        #cropped_image.resize(300, 300)
+        # 뭐가 적절한 사이즈일지 잘 모르겠어.. 참고로 28은 개작아 사진
+        cropped_image = cropped_image.resize((100, 100))
 
         if not os.path.exists(image_folder):
             os.makedirs(image_folder)
