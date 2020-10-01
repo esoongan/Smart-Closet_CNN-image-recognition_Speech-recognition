@@ -51,6 +51,7 @@ y = np.array(y)
 # X_test : (시험데이터갯수, 높이, 너비, 채널수)
 # y_train : (훈련데이터갯수, 정답클래스 개수)
 # y_test : (시험데이터갯수, 정답클래스 개수)
+# default 비율 : 75:25
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 xy = (X_train/255.0, X_test/255, y_train, y_test)
 
