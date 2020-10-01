@@ -16,23 +16,15 @@ def crop_image():
 
     f = open(filepath, 'r')
 
-<<<<<<< HEAD
-    # 300대신 28922로 변경해야함.
-    for i in range(200):
-=======
     # 10대신 28922로 변경해야함.
     for i in range(300):
->>>>>>> 769131f9811b6ce500ff49547178cfca6051c1f6
         line = f.readline()
         # image_name = img/Sheer_Pleated-Front_Blouse/img_00000001.jpg
         image_name = line[:line.find(' ')]
         # image_foler = Sheer_Pleated-Front_Blouse
         image_folder = image_name[4:line.rfind('/')]
-<<<<<<< HEAD
         # image_number =/img_00000001.jpg
-        image_number = image_name[line.rfind('/'):line.rfind('g')+1]
-=======
->>>>>>> 769131f9811b6ce500ff49547178cfca6051c1f6
+        image_number = image_name[line.rfind('/'):line.rfind('g') + 1]
         # 경계값숫자만 뽑아서 문자열로 먼저 저장.
         image_val = line[71:]
         # 문자열을 배열로 변환
@@ -49,18 +41,9 @@ def crop_image():
 
         if not os.path.exists(image_folder):
             os.makedirs(image_folder)
-<<<<<<< HEAD
 
-        # 저장되는 장소 - '/Users/iseungjin/2020_3_2/capstone/cropImage/newimg/image_folder/img_00000001.jpg'
+        # 저장되는 장소 - '/Users/iseungjin/2020_3_2/capstone/cropImage/newimg/폴더별이름/img_00000001.jpg'
         cropped_image.save(save_path + 'newimg/'+ image_folder + image_number)
-=======
-        # new_img_name = /img_00000001.jpg 임
-        new_img_name = '/img_' + format(i, '08') + '.jpg'
-
-        # 저장되는 장소 - '/Users/iseungjin/2020_3_2/capstone/crop_image/img_00000001.jpg'
-        cropped_image.save(save_path + 'newimg/'+ image_folder + new_img_name)
->>>>>>> 769131f9811b6ce500ff49547178cfca6051c1f6
-
 
 
 os.chdir(BASE_PATH)
@@ -70,4 +53,3 @@ crop_image()
 #print(pix[100][150]) // 픽셀값 확인
 
 #image.save(crop_image)
-#image.resize(())
