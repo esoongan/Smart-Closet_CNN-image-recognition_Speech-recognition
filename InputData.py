@@ -32,6 +32,7 @@ for idx, cat in enumerate(categories):
     for i, f in enumerate(files):
         img = Image.open(f)
         img = img.convert("RGB")
+        #img = img.resize(80*80)
         # 해당이미지를 배열로 변경-- 형상은 높이*너비*채널
         data = np.asarray(img)
 
@@ -53,7 +54,7 @@ y = np.array(y)
 # y_test : (시험데이터갯수, 정답클래스 개수)
 # default 비율 : 75:25
 X_train, X_test, y_train, y_test = train_test_split(X, y)
-xy = (X_train/255.0, X_test/255, y_train, y_test)
+xy = (X_train, X_test, y_train, y_test)
 
 # 여기서 저장된 image_data_npy파일을 불러서 이걸로 학습을 시키면 됨.
 # ex ) X_train, X_test, y_train, y_test = np.load(BASE_PATH + '/image_data.npy') 이렇게 해서 불러오고 코딩하면댐!
