@@ -12,12 +12,9 @@ BASE_PATH = "/Users/iseungjin/2020_3_2/capstone/inputdata"
 # shape_dir : 종류폴더
 # 중요 - 각 폴더별로 이미지갯수 비슷해야함!!!!!
 pattern_dir = BASE_PATH + "/pattern"
-shape_dir : BASE_PATH + "/shape"
 # ex) categories = ['flora', 'checked', 'stripe']
 
-# 지금 분류할게 종류야? 패턴이야? 에 따라 다르게 설정
-type = pattern_dir
-categories = os.listdir(type)
+categories = os.listdir(pattern_dir)
 # 총 분류할 클래스 개수 ( 줄무늬, 꽃무늬, 체크무늬 가 총 몇개인지)
 class_number = len(categories)
 
@@ -41,17 +38,17 @@ for idx, cat in enumerate(categories):
         img = cv2.imread(f)
         # 이미지 resize
         # 맨뒤 파라미터- 보간법 인데 이미지를 축소하는경우 inter_area라는 영역보간법을 가장많이 사용
-        img = cv2.resize(img, dsize=(50,50), interpolation=cv2.INTER_AREA)
+        img = cv2.resize(img, dsize=(100,100), interpolation=cv2.INTER_AREA)
         # 흑백으로 변환
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # 흑백으로 변환후 channel이 3에서 1로 변함확인
-        # print(img_gray.shape)
+        # 패턴이니까 중간부분으로 자르기
+        cropped_pattern = img_gray[25:75, 25:75]
 
-        # plt.imshow(img_gray, cmap = 'gray')
-        # plt.show()
-
+        #이미지 확인
+        #cv2.imshow("cropped", cropped_pattern)
+        #cv2. waitKey()
         # 해당이미지를 배열로 변경-- 형상은 높이*너비*채널
-        data = np.asarray(img_gray)
+        data = np.asarray(cropped_pattern)
 
         X.append(data)
         y.append(label)
