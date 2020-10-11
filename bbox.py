@@ -16,8 +16,8 @@ def crop_image():
 
     f = open(filepath, 'r')
 
-    # 10대신 28922로 변경해야함.
-    for i in range(300):
+    # 10대신 289222로 변경해야함.
+    for i in range(100):
         line = f.readline()
         # image_name = img/Sheer_Pleated-Front_Blouse/img_00000001.jpg
         image_name = line[:line.find(' ')]
@@ -25,6 +25,7 @@ def crop_image():
         image_folder = image_name[4:line.rfind('/')]
         # image_number =/img_00000001.jpg
         image_number = image_name[line.rfind('/'):line.rfind('g') + 1]
+        print(image_folder + '/'+ image_number)
         # 경계값숫자만 뽑아서 문자열로 먼저 저장.
         image_val = line[71:]
         # 문자열을 배열로 변환
@@ -38,7 +39,7 @@ def crop_image():
         image = Image.open('/Users/iseungjin/2020_3_2/capstone/cropImage/' + image_name)
         cropped_image = image.crop(tuple(image_val_list_int))
         # 뭐가 적절한 사이즈일지 잘 모르겠어.. 참고로 28은 개작아 사진
-        cropped_image = cropped_image.resize((100, 100))
+        # cropped_image = cropped_image.resize((100, 100))
 
         if not os.path.exists(image_folder):
             os.makedirs(image_folder)

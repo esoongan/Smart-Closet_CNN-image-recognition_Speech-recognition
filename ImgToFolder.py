@@ -10,7 +10,7 @@ CATEGORY_SIZE = 50
 # 1. img 폴더 : DeepFashion DB의 오리지날 img 폴더(폴더 옮길 이미지 파일들)
 # 2. list_attr_img.txt
 # 3. list_attr_cloth.txt
-BASE_PATH = "/Users/iseungjin/2020_3_2/test"
+BASE_PATH = "/Users/iseungjin/2020_3_2/capstone/test"
 
 # 지영언니가 만든 각 사진별 속성값이 적혀있는 텍스트 파일 경로 (신경망 별로 이 경로를 변경하여 프로그램 실행)
 attr_img_path = "./test_list_attr_img.txt"
@@ -44,9 +44,9 @@ def moveToFolder(folder_name, img_name, n):
     new_img_name = '/img_' + format(n, '08')+'.jpg'         # .txt -> jpg로 바꿔야함
 
     # 파일 이름을 위의 new_img_name으로 변경하고 속성별 폴더로 이동시키기
-    shutil.move(src_path, dest_path+new_img_name)
-    print('[' + img_name +']: '+src_path+' -----> '+dest_path+new_img_name)
-    print()
+    shutil.copy(src_path, dest_path+new_img_name)
+    #print('[' + img_name +']: '+src_path+' -----> '+dest_path+new_img_name)
+    #print()
     return
 
 
