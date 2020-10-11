@@ -37,6 +37,7 @@ for idx, cat in enumerate(categories):
     files = glob.glob(image_dir+'/*.jpg')
     print(cat, "파일 길이:", len(files))
     for i, f in enumerate(files):
+<<<<<<< HEAD
         # 이미지 불러오기
         img = cv2.imread(f)
         # 이미지 resize
@@ -50,6 +51,11 @@ for idx, cat in enumerate(categories):
         # plt.imshow(img_gray, cmap = 'gray')
         # plt.show()
 
+=======
+        img = Image.open(f)
+        img = img.convert("RGB")
+        #img = img.resize(80*80)
+>>>>>>> 8fe7194025a69ef4690aaf77e8b2d8f163320790
         # 해당이미지를 배열로 변경-- 형상은 높이*너비*채널
         data = np.asarray(img_gray)
 
@@ -69,8 +75,13 @@ y = np.array(y)
 # X_test : (시험데이터갯수, 높이, 너비, 채널수)
 # y_train : (훈련데이터갯수, 정답클래스 개수)
 # y_test : (시험데이터갯수, 정답클래스 개수)
+# default 비율 : 75:25
 X_train, X_test, y_train, y_test = train_test_split(X, y)
+<<<<<<< HEAD
 xy = (X_train/255.0, X_test/255.0, y_train, y_test)
+=======
+xy = (X_train, X_test, y_train, y_test)
+>>>>>>> 8fe7194025a69ef4690aaf77e8b2d8f163320790
 
 # 여기서 저장된 image_data_npy파일을 불러서 이걸로 학습을 시키면 됨.
 # ex ) X_train, X_test, y_train, y_test = np.load(BASE_PATH + '/image_data.npy') 이렇게 해서 불러오고 코딩하면댐!
