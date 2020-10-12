@@ -13,15 +13,15 @@ import os
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True)
 ap.add_argument("-o", "--output", required=True)
-ap.add_argument("-p", "--prefix", type=str, default="image")
+ap.add_argument("-p", "--prefix", type=str, default="img")
 args = vars(ap.parse_args())
 
 
-args = {"image": "C:/2020_2/capstone/img_attr/img_attr/animal/img_00000026.jpg", "output": "C:/2020_2/capstone/img_attr/img_attr/auggu", "prefix": "image"}
+args = {"image": "C:/2020_2/capstone/img_attr/img_attr/animal/img_00000026.jpg", "output": "C:/2020_2/capstone/img_attr/img_attr/auggu", "prefix": "img"}
 
-# image: input 이미지 경로
-# output: data augmentation의 결과가 저장될 이미지경로
-# prefix: image filename의 prefix
+# image: input 이미지 경로 --> 내가 증폭시키고자 할 이미지 경로!!!
+# output: data augmentation의 결과가 저장될 이미지경로 --> 자신에게 맞는 경로로 꼭 수정!!!
+# prefix: image filename의 prefix --> img로 통일
 
 print("[INFO] loading example image...")
 image = load_img(args["image"])
