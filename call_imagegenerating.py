@@ -4,6 +4,7 @@ import os
 FOLDERS_PATH = '/Users/hayeong/Smart-Closet_local/test_input'
 # OUTPUT_PATH: 새로운 폴더들이 생길 경로
 OUTPUT_PATH = '/Users/hayeong/Smart-Closet_local/test_output'
+# PROGRAM_PATHimagegenerating.py가 있는 경로
 PROGRAM_PATH = '/Users/hayeong/Smart-Closet'
 os.system('cd '+PROGRAM_PATH)
 
@@ -18,8 +19,7 @@ for category in category_dirs:
         output_arg = OUTPUT_PATH+'/'+category
         if not os.path.exists(output_arg):
             os.makedirs(output_arg)
-        print(input_arg)
-
+        
         # image: input 이미지 경로 --> 내가 증폭시키고자 할 이미지 경로!!!
         # output: data augmentation의 결과가 저장될 이미지경로 --> 자신에게 맞는 경로로 꼭 수정!!!
         # prefix: image filename의 prefix --> img로 통일
