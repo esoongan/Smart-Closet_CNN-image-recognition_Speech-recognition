@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
 # import the necessary packages
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
 from keras.preprocessing.image import load_img
-from imutils import paths
+import tensorflow as tf
+# from imutils import paths
 import argparse
 import numpy as np
 import os
 
-# os.chdir("/Users/woohyeon/PycharmProjects/keras/1.Data_Augmentation")
 
 # construct the argument parse ad parse the arguments
 ap = argparse.ArgumentParser()
@@ -15,13 +16,6 @@ ap.add_argument("-i", "--image", required=True)
 ap.add_argument("-o", "--output", required=True)
 ap.add_argument("-p", "--prefix", type=str, default="img")
 args = vars(ap.parse_args())
-
-
-args = {"image": "C:/2020_2/capstone/img_attr/img_attr/animal/img_00000026.jpg", "output": "C:/2020_2/capstone/img_attr/img_attr/auggu", "prefix": "img"}
-
-# image: input 이미지 경로 --> 내가 증폭시키고자 할 이미지 경로!!!
-# output: data augmentation의 결과가 저장될 이미지경로 --> 자신에게 맞는 경로로 꼭 수정!!!
-# prefix: image filename의 prefix --> img로 통일
 
 print("[INFO] loading example image...")
 image = load_img(args["image"])
@@ -67,3 +61,8 @@ for image in imageGen:
     # if we have reached 10 examples, break from the loop
     if total == 10:
         break
+
+
+
+
+
