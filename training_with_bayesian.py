@@ -1,8 +1,10 @@
 # https://www.dlology.com/blog/how-to-do-hyperparameter-search-with-baysian-optimization-for-keras-model/ 참고
+import tensorflow as tf
+#from tensorflow.python import keras as keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Dropout, BatchNormalization, MaxPooling2D, Flatten, Activation
-from tensorflow.python.keras.optimizer_v2 import rmsprop
-import tensorflow as tf
+import keras.optimizers
+
 
 # 패턴 총 6개로 분류함
 NUM_CLASSES = 6
@@ -36,6 +38,8 @@ def get_model(input_shape, dropout2_rate=0.5):
     model.add(Dense(128, activation='relu', name="dense_1"))
     model.add(Dropout(dropout2_rate, name="dropout_2"))
     model.add(Dense(NUM_CLASSES, activation='softmax', name="dense_2"))
+
+    print(model.summary())
     return model
 
 # <dense layer의 최적화된 뉴런 개수까지 구하기>
@@ -50,9 +54,9 @@ def fit_with(input_shape, verbose, dropout2_rate, lr):
     model = get_model(input_shape, dropout2_rate)
 
     # Train the model for a specified number of epochs.
-    optimizer = rmsprop.RMSProp(learning_rate=lr)
+    adam = keras.optimizers.Adam(learning_rate=lr)
     model.compile(loss=tf.keras.losses.categorical_crossentropy,
-                  optimizer=optimizer,
+                  optimizer=adam,
                   metrics=['accuracy'])
 
     # Train the model with the train dataset.
@@ -72,15 +76,12 @@ def fit_with(input_shape, verbose, dropout2_rate, lr):
 
 
 from functools import partial
-
 # verbose: 얼마나 상세히 print해 줄 것인지
 verbose = 1
 fit_with_partial = partial(fit_with, input_shape, verbose)
 
 
-
 from bayes_opt import BayesianOptimization
-
 # Bounded region of parameter space
 # *** dropout rate와 learning rate의 최적화 실행
 # <dense layer의 최적화된 뉴런 개수까지 구하기>
