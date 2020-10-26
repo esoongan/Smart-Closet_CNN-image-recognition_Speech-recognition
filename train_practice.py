@@ -134,7 +134,7 @@ np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
 
 # 예측값들을 실제 이미지로 테스트해보는코드. 
 for num, predict in enumerate(prediction):
-  # i 는 [0.000 0.000 0.000 1.000] 의 형태임 
+  # predict 는 [0.000 0.000 0.000 1.000] 의 형태임 
   classes = ["Blazer", "Blouse", "Dress", "LongSleeve", "Pants", "Shirts", "Shorts", "ShortSleeve", "Skirt", "Sleeveless"]
   # 예측값이 0.8이상이면 그게 정답이라고 설정 
   for i, value in enumerate(predict):
