@@ -1,4 +1,3 @@
-from PIL import Image
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,11 +13,10 @@ BASE_PATH = "/Users/iseungjin/2020_3_2/capstone/inputdata"
 shape_dir = BASE_PATH + "/shape"
 # ex) categories = ['flora', 'checked', 'stripe']
 
-# 지금 분류할게 종류야? 패턴이야? 에 따라 다르게 설정
 categories = os.listdir(shape_dir)
+print('레이블 리스트입니다', categories)
 # 총 분류할 클래스 개수 ( 줄무늬, 꽃무늬, 체크무늬 가 총 몇개인지)
 class_number = len(categories)
-print(categories)
 
 X = []
 y = []
@@ -36,28 +34,26 @@ for idx, cat in enumerate(categories):
     files = glob.glob(image_dir+'/*.jpg')
     print(cat, "파일 길이:", len(files))
     for i, f in enumerate(files):
-        # 이미지 불러오기
-        img = cv2.imread(f)
+        # 이미지 불러오기 , imread(파일경로, mode)-> mode로 적용할 초기상태 설정할수있음
+        # ex) mode - IMREAD_UNCHANGED, IMREAD_GRAYSCALE,
+        img = plt.imread(f)
         # 이미지 resize
-        # 맨뒤 파라미터- 보간법 인데 이미지를 축소하는경우 inter_area라는 영역보간법을 가장많이 사용
-        img = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_AREA)
-        # 흑백으로 변환
-        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # 흑백으로 변환후 channel이 3에서 1로 변함확인
-        # print(img_gray.shape)
+        # 맨뒤 파라미터- 보간법 인데 이미지를 축소하는경우 inter_area라는 영역보간법을 가장많이 사용 / 확대는 inter_linear
+        img_shape = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_LINEAR)
 
-        # plt.imshow(img_gray, cmap = 'gray')
-        # plt.show()
+        if img_shape.shape == (64, 64, 3):
+            # 해당이미지를 배열로 변경-- 형상은 높이*너비*
+            data = np.asarray(img_shape)
 
-        # 해당이미지를 배열로 변경-- 형상은 높이*너비*채널
-        data = np.asarray(img_gray)
+            X.append(data)
+            y.append(label)
+            # 0번째 이미지 출력 / 그다음 700번째 이미지 출력 / 총몇개인지 세거나 에폭때문에 있는거같으나 일단 보류
+            # if i % 700 == 0:
+            #     print(cat,':', f)
+        else:
+            continue
 
-        X.append(data)
-        y.append(label)
-
-        # 0번째 이미지 출력 / 그다음 700번째 이미지 출력 / 총몇개인지 세거나 에폭때문에 있는거같으나 일단 보류
-        # if i % 700 == 0:
-        #     print(cat,':', f)
+    print(cat, "파일생성 완료....")
 
 # X - 입력데이터 이미지값 / Y - 정답레이블 [1,0,0]이면 floral, [0,1,0]이면 checked 이러켕
 X = np.array(X)
@@ -68,13 +64,13 @@ y = np.array(y)
 # X_test : (시험데이터갯수, 높이, 너비, 채널수)
 # y_train : (훈련데이터갯수, 정답클래스 개수)
 # y_test : (시험데이터갯수, 정답클래스 개수)
-# default 비율 : 75:25
-X_train, X_test, y_train, y_test = train_test_split(X, y)
+# default 비율말고 테스트셋은 0.2(대략 600개),
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
 xy = (X_train/255.0, X_test/255.0, y_train, y_test)
 
 # 여기서 저장된 image_data_npy파일을 불러서 이걸로 학습을 시키면 됨.
 # ex ) X_train, X_test, y_train, y_test = np.load(BASE_PATH + '/image_data.npy') 이렇게 해서 불러오고 코딩하면댐!
-np.save(BASE_PATH + '/image_data_shape_npy', xy)
+np.save(BASE_PATH + '/image_data_shape', xy)
 
 
 # 패턴폴더안에 각각의 패턴이 존재 - 그것들이 카테고리가 됨 ( 카테고리의 개수는 정답레이블의 원소개수)
