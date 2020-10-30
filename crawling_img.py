@@ -145,10 +145,10 @@ def crawling(query):
 socket.setdefaulttimeout(30)
 
 # 이미지들이 저장될 경로 및 폴더 이름
-path = "/Users/hayeong/Smart-Closet_local/database/crawling"
+path = "/Users/iseungjin/2020_3_2/capstone/crawling_img"
 
 # 드라이버 경로 지정 (크롬 이용) -> 컴퓨터에 chromedriver 설치해야 함 (구글에 치면 다운 가능)
-driver = webdriver.Chrome('/Users/hayeong/chromedriver')
+driver = webdriver.Chrome('/Users/iseungjin/chromedriver')
 
 # 크롤링한 이미지 수
 crawled_count = 0

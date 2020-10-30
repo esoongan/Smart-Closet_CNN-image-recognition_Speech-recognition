@@ -11,13 +11,14 @@ BASE_PATH = "/Users/iseungjin/2020_3_2/capstone/inputdata"
 # pattern_dir : 각각의 패턴폴더를 담은 폴더
 # shape_dir : 종류폴더
 # 중요 - 각 폴더별로 이미지갯수 비슷해야함!!!!!
-shape_dir : BASE_PATH + "/shape"
+shape_dir = BASE_PATH + "/shape"
 # ex) categories = ['flora', 'checked', 'stripe']
 
 # 지금 분류할게 종류야? 패턴이야? 에 따라 다르게 설정
 categories = os.listdir(shape_dir)
 # 총 분류할 클래스 개수 ( 줄무늬, 꽃무늬, 체크무늬 가 총 몇개인지)
 class_number = len(categories)
+print(categories)
 
 X = []
 y = []
@@ -29,7 +30,7 @@ for idx, cat in enumerate(categories):
     label[idx] = 1
 
     # 포문을 돌면서 category마다 해당카테고리의 이미지파일만 저장할 폴더 생성.
-    image_dir = pattern_dir + '/' + cat
+    image_dir = shape_dir + '/' + cat
     # ex) files ='/Users/iseungjin/2020_3_2/capstone/cropImage/pattern/floral/img_00000002.jpg'
     # glob - 특정파일들만 뽑아서 저장.
     files = glob.glob(image_dir+'/*.jpg')
@@ -39,7 +40,7 @@ for idx, cat in enumerate(categories):
         img = cv2.imread(f)
         # 이미지 resize
         # 맨뒤 파라미터- 보간법 인데 이미지를 축소하는경우 inter_area라는 영역보간법을 가장많이 사용
-        img = cv2.resize(img, dsize=(100,100), interpolation=cv2.INTER_AREA)
+        img = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_AREA)
         # 흑백으로 변환
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # 흑백으로 변환후 channel이 3에서 1로 변함확인
@@ -73,7 +74,7 @@ xy = (X_train/255.0, X_test/255.0, y_train, y_test)
 
 # 여기서 저장된 image_data_npy파일을 불러서 이걸로 학습을 시키면 됨.
 # ex ) X_train, X_test, y_train, y_test = np.load(BASE_PATH + '/image_data.npy') 이렇게 해서 불러오고 코딩하면댐!
-np.save(BASE_PATH + '/image_data_npy', xy)
+np.save(BASE_PATH + '/image_data_shape_npy', xy)
 
 
 # 패턴폴더안에 각각의 패턴이 존재 - 그것들이 카테고리가 됨 ( 카테고리의 개수는 정답레이블의 원소개수)

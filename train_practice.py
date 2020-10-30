@@ -61,7 +61,7 @@ model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
  # flatten / 출력함수 - 소프트맥수 ( 다중클래스분류에서 주로 사용)
-model.add(Flatten())
+model.add(Flatten()) # flatten -
 model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(nb_classes_shape, activation='softmax'))
@@ -143,6 +143,7 @@ for num, predict in enumerate(prediction):
       print(filenames[num], "이미지는", i, "번째 클래스(", classes[i] ,")로 추정됩니다.")
       break
     else :
+<<<<<<< Updated upstream
       continue
 
 i = [0,0,0,0,1]
@@ -152,3 +153,6 @@ for i, value in enumerate(i):
   if value >= 0.8:
     print("해당이미지는",i,"번째 클래스입니다")
     print(classes[i])
+=======
+      continue
+>>>>>>> Stashed changes
