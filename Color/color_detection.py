@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from sklearn.cluster import KMeans
-from lab_converter import ColorConverter            # RGBconverter -> ColorConverter
+from .lab_converter import ColorConverter            # RGBconverter -> ColorConverter
 import matplotlib.pyplot as plt
 import time
 
