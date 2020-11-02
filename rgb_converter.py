@@ -1,20 +1,21 @@
+# 이거 대신 lab_converter 사용하기!!!
 import numpy as np
 
 
 ### 색상간 거리를 계산하여 가장 비슷한(거리가 가까운) 색상명으로 맵핑해주는 프로그램
 # 사용할 색상 카테고리를 얼마나 세분화할 지 고민해보아야 함
-class rgb_converter:
-    COLORS_FILE_PATH = '/Users/hayeong/Smart-Closet/color-rgb.txt'
+class RGBconverter:
 
-    def __init__(self, colors_path):
+    def __init__(self, colors_path = '/Users/hayeong/Smart-Closet/color-rgb.txt'):
         # {'name': <색상 이름>, 'rgb': [r, g, b]}를 원소로 갖음
         # 사전에 정의한 색상 이름과 rgb를 dictionary로 묶어서 color_list에 저장
-        self.color_list = []
-        self.init_color_list()
-
         # format: <색상명> <r>,<g>,<b>
         # line[0]: 빨간색 185,32,33
         self.COLORS_FILE_PATH = colors_path
+        self.color_list = []
+        self.init_color_list()
+
+
 
     # format: <색상명> <r>,<g>,<b>
     # ex) line[0]: 빨간색 185,32,33
@@ -26,10 +27,11 @@ class rgb_converter:
         while (True):
             line = f.readline()
             if line == '':
-                break;
-
+                break
+            if line == '\n':
+                continue
             # preprocessing
-            color_name = line[:line.find(' ')]  # -> '빨강' / '주황' / ...
+            color_name = line[:line.find('/')]  # -> '빨강' / '주황' / ...
             rgb = line[line.find(' ') + 1:].split(',')  # -> [255, 0, 0]
 
             # str list -> int list
@@ -59,8 +61,5 @@ class rgb_converter:
             if d < min_d:
                 min_d = d
                 index = i
-
         # 가장 근접한 색상명 리턴
         return self.color_list[index]['name']
-
-
