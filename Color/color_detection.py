@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 from sklearn.cluster import KMeans
-from .lab_converter import ColorConverter            # RGBconverter -> ColorConverter
+from Color.lab_converter import ColorConverter            # RGBconverter -> ColorConverter
 import matplotlib.pyplot as plt
 import time
 
@@ -12,7 +12,7 @@ import time
 converter = ColorConverter()
 # 이미지 로드
 image = cv2.imread(
-    "/Users/hayeong/Desktop/Capstone/DeepFashion DB/pattern_dir/chevron/img_0_33.jpg")  # test image
+    "/Users/hayeong/Desktop/Capstone/DeepFashion DB/pattern_dir/dots/img_00007795.jpg")  # test image
 
 # 배경색 제거를 위한 이미지 자르기
 h, w, _ = image.shape
@@ -31,7 +31,7 @@ image = image.reshape((image.shape[0] * image.shape[1], 3))
 
 ##### k-mean 알고리즘(비지도 학습에서 가장 보편적인 알고리즘)으로 이미지 학습 ######
 # k개의 데이터 평균을 만들어 데이터를 클러스팅하는 알고리즘
-k = 5  # 추출할 클러스터 개수
+k = 5 # 추출할 클러스터 개수
 # k-mean 알고리즘을 이용한 비지도 학습 실행
 clt = KMeans(n_clusters=k).fit(image)
 # 생성한 k개의 cluster 각각의 중심값이 담긴 리스트
