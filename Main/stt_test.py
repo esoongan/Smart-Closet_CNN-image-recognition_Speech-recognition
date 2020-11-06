@@ -142,7 +142,7 @@ def compare(transcript):
 
     elif (flag == 1 and '옷' in text):
         clothes = classification.execute()
-        tts.synthesize_text(clothes)
+        tts.synthesize_text("이 옷은 {}색 {}패턴 {}입니다.".format(clothes[0],clothes[1],clothes[2]))
 
     elif (flag == 1):
         tts.synthesize_text("다시한번 말씀해주시겠어요?")
