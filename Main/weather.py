@@ -1,5 +1,7 @@
 # from weather.py import WeatherAPI
 
+# weatherAPI = WeatherAPI()
+# weather = weatherAPI.request_weather()
 # 날씨 정보 리스트 게또
 
 
@@ -112,6 +114,3 @@ class WeatherModule:
   "cod": 200
   }                         
 '''
-
-weatherAPI = WeatherModule()
-weather = weatherAPI.request_weather()
