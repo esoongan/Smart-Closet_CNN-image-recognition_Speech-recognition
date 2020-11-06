@@ -14,7 +14,7 @@ import os
 
 
 class TTS:
-    def __init__(self, abs_save_path='.'):
+    def __init__(self, abs_save_path='../data/'):
         self.SAVE_PATH = abs_save_path
 
         self.client = texttospeech.TextToSpeechClient()
@@ -40,19 +40,27 @@ class TTS:
         """Synthesizes speech from the input string of text."""
         # [api key].json 파일이 있는 경로
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =\
-            "/Users/hayeong/Smart-Classification/SClocal/Smart-Classification-28139a960cdf.json"
+            "/home/pi/smartcloset/Smart-Classification-28139a960cdf.json"
         input_text = texttospeech.SynthesisInput(text=text)
 
         response = self.client.synthesize_speech(
             request={"input": input_text, "voice": self.voice, "audio_config": self.audio_config}
         )
 
-        os.chdir(self.SAVE_PATH)
-        with open('output.mp3', "wb") as out:
+
+        with open(self.SAVE_PATH + '/output.mp3', "wb") as out:
             out.write(response.audio_content)
         print('[' + text + '] written to file "' + self.SAVE_PATH + '"/output.mp3"')
-        return self.SAVE_PATH + '/output.mp3'
 
+        '''음성 출력까지???'''
+        import pygame
+        pygame.mixer.init()
+        pygame.mixer.music.load(self.SAVE_PATH + '/output.mp3')
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy() == True:
+            continue
+
+        return self.SAVE_PATH + '/output.mp3'
 
 '''
 tts = TTS('/Users/hayeong/Smart-Classification/SClocal/')
