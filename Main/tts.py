@@ -10,7 +10,6 @@
 
 # https://cloud.google.com/text-to-speech/docs/create-audio?hl=ko#text-to-speech-text-python
 from google.cloud import texttospeech
-import os
 
 
 class TTS:
@@ -30,7 +29,7 @@ class TTS:
         self.audio_config = texttospeech.AudioConfig(
             audio_encoding=texttospeech.AudioEncoding.MP3,
             # 오디오 볼륨: [-96.0, 16.0] (default = 0)
-            volumeGainDb=6
+            # volumeGainDb=6
         )
 
     def set_path(self, abs_path):
@@ -39,8 +38,8 @@ class TTS:
     def synthesize_text(self, text):
         """Synthesizes speech from the input string of text."""
         # [api key].json 파일이 있는 경로
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =\
-            "/home/pi/smartcloset/Smart-Classification-28139a960cdf.json"
+        #os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =\
+        #    "/home/pi/smartcloset/Smart-Classification-28139a960cdf.json"
         input_text = texttospeech.SynthesisInput(text=text)
 
         response = self.client.synthesize_speech(

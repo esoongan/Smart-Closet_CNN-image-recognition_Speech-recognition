@@ -1,4 +1,3 @@
-import math
 from skimage import color
 from colormath.color_diff import delta_e_cie2000
 from colormath.color_objects import LabColor

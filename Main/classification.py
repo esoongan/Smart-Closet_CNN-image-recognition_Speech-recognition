@@ -1,7 +1,7 @@
 from multiprocessing import Process, Queue
-import Color.color as color
-from Main.camera import CameraModule
-from Speech.tts import TTS
+import color as color
+from camera import CameraModule
+from tts import TTS
 
 class Classification:
     def __init__(self):

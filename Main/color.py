@@ -1,11 +1,11 @@
 import numpy as np
 import cv2
 from sklearn.cluster import KMeans
-from Color.lab_converter import ColorConverter
+from lab_converter import ColorConverter
 
 
 def execute(img_path, q):
-    converter = ColorConverter('./final_color_list.txt')
+    converter = ColorConverter('final_color_list.txt')
     # 이미지 로드
     image = cv2.imread(img_path)  # test image
 
@@ -82,6 +82,8 @@ def execute(img_path, q):
     rgb, w = rgb_tuple_list[0]
     color_name = converter.rgb_to_name(rgb)
 
+
+##############################ret_string 고치기
     ret_string = color_name + ' '+ round(w,1)+'퍼, '
     result.append((color_name, round(w,1)))
 
