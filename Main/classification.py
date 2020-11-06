@@ -2,6 +2,11 @@ from multiprocessing import Process, Queue
 import color as color
 from camera import CameraModule
 
+# from patternNN import pattern
+# pattern = pattern()
+# pattern.model_predict() --> ~무늬 혹은 알수없는 패턴 리턴.
+
+
 class Classification:
     def __init__(self):
         self.camera = CameraModule()
@@ -24,6 +29,8 @@ class Classification:
         color_string = colorQ.get()
 
         return color_string
+
+
 
 
 
