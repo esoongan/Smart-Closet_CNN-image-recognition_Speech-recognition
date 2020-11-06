@@ -6,7 +6,7 @@ import numpy as np
 # 사용할 색상 카테고리를 얼마나 세분화할 지 고민해보아야 함
 class RGBconverter:
 
-    def __init__(self, colors_path = '/Users/hayeong/Smart-Closet/color-rgb.txt'):
+    def __init__(self, colors_path = '/Users/hayeong/Smart-Classification/color-rgb.txt'):
         # {'name': <색상 이름>, 'rgb': [r, g, b]}를 원소로 갖음
         # 사전에 정의한 색상 이름과 rgb를 dictionary로 묶어서 color_list에 저장
         # format: <색상명> <r>,<g>,<b>

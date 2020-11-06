@@ -7,8 +7,8 @@ from colormath.color_objects import LabColor
 # rgb 대신 Lab 색공간 이용
 class ColorConverter:
 
-    def __init__(self, colors_path='/Users/hayeong/Smart-Closet/Color/final_name_lab.txt'):
-        # Lab list's format: L a b <color>
+    def __init__(self, colors_path=''):
+        # Lab list's format: L a b <color>정
         self.COLORS_FILE_PATH = colors_path
         # color_list[0]: 색상명
         # color_list[1]: Tuple(L, a, b)

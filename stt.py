@@ -135,13 +135,13 @@ def listen_print_loop(responses):
     The responses passed is a generator that will block until a response
     is provided by the server.
 
-    Each response may contain multiple results, and each result may contain
+    Each response may contain multiple results, and each q may contain
     multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
-    print only the transcription for the top alternative of the top result.
+    print only the transcription for the top alternative of the top q.
 
     In this case, responses are provided for interim results as well. If the
     response is an interim one, print a line feed at the end of it, to allow
-    the next result to overwrite it, until the response is a final one. For the
+    the next q to overwrite it, until the response is a final one. For the
     final one, print a newline to preserve the finalized transcription.
     """
     num_chars_printed = 0
@@ -150,7 +150,7 @@ def listen_print_loop(responses):
             continue
 
         # The `results` list is consecutive. For streaming, we only care about
-        # the first result being considered, since once it's `is_final`, it
+        # the first q being considered, since once it's `is_final`, it
         # moves on to considering the next utterance.
         result = response.results[0]
         if not result.alternatives:
@@ -162,8 +162,8 @@ def listen_print_loop(responses):
         # Display interim results, but with a carriage return at the end of the
         # line, so subsequent lines will overwrite them.
         #
-        # If the previous result was longer than this one, we need to print
-        # some extra spaces to overwrite the previous result
+        # If the previous q was longer than this one, we need to print
+        # some extra spaces to overwrite the previous q
         overwrite_chars = ' ' * (num_chars_printed - len(transcript))
 
         if not result.is_final:

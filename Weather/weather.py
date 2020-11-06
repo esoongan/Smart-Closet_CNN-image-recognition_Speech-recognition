@@ -7,8 +7,8 @@
 
 import requests
 
-
-class WeatherAPI:
+# 날씨별 옷차림 데이터셋 만들기
+class WeatherModule:
     city_list = [
         {'name': 'Seoul', 'city_id': '1835847'},
         {'name': 'Busan', 'city_id': '1838524'},
@@ -31,6 +31,7 @@ class WeatherAPI:
     url = 'http://api.openweathermap.org/data/2.5/weather'
 
     def __init__(self):
+        # 지역은 울로 고정
         self.city_id = self.city_list[0]['city_id']
         self.city_name = self.city_list[0]['city_name']
         self.params = dict(

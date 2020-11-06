@@ -12,7 +12,7 @@ import time
 converter = ColorConverter()
 # 이미지 로드
 image = cv2.imread(
-    "/Users/hayeong/Desktop/Capstone/DeepFashion DB/pattern_dir/dots/img_00007795.jpg")  # test image
+    "/Users/hayeong/Smart-Closet/SClocal/test_img/img_00000018.jpg")  # test image
 
 # 배경색 제거를 위한 이미지 자르기
 h, w, _ = image.shape
