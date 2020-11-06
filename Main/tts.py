@@ -13,7 +13,7 @@ from google.cloud import texttospeech
 
 
 class TTS:
-    def __init__(self, abs_save_path='.'):
+    def __init__(self, abs_save_path='../data'):
         self.SAVE_PATH = abs_save_path
 
         self.client = texttospeech.TextToSpeechClient()
@@ -46,14 +46,14 @@ class TTS:
             request={"input": input_text, "voice": self.voice, "audio_config": self.audio_config}
         )
 
-        os.chdir(self.SAVE_PATH)
-        with open('output.mp3', "wb") as out:
+        with open(self.SAVE_PATH+'/output.mp3', "wb") as out:
             out.write(response.audio_content)
         print('[' + text + '] written to file "' + self.SAVE_PATH + '"/output.mp3"')
-        return self.SAVE_PATH + '/output.mp3'
 
+        import pygame
+        pygame.mixer.init()
+        pygame.mixer.music.load(self.SAVE_PATH + '/output.mp3')
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy() == True:
+            continue
 
-'''
-tts = TTS('/Users/hayeong/Smart-Classification/SClocal/')
-audio_path = tts.synthesize_text('꽃무늬')
-'''

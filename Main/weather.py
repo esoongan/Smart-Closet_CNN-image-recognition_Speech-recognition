@@ -1,10 +1,3 @@
-# from weather.py import WeatherAPI
-
-# weatherAPI = WeatherAPI()
-# weather = weatherAPI.request_weather()
-# 날씨 정보 리스트 게또
-
-
 import requests
 
 # 날씨별 옷차림 데이터셋 만들기

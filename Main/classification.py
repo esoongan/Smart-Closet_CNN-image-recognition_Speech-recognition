@@ -1,7 +1,6 @@
 from multiprocessing import Process, Queue
 import color as color
 from camera import CameraModule
-from tts import TTS
 
 class Classification:
     def __init__(self):
@@ -18,15 +17,13 @@ class Classification:
         data_pattern, data_shape = self.camera.capture()
 
         # args=('./capture_img/image.jpg')
-        color_process = Process(target=color.execute, args=('/Users/hayeong/Smart-Classification/SClocal/test_img/img_00000018.jpg', colorQ))
+        color_process = Process(target=color.execute, args=(self.save_path + '/image.jpg', colorQ))
         color_process.start()
 
-
         color_process.join()
+        color_string = colorQ.get()
 
-        while not colorQ.empty():
-            color_name, w = colorQ.get()
-            print(color_name, w)
+        return color_string
 
 
 

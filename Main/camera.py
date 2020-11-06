@@ -8,18 +8,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class CameraModule:
-    def __init__(self):
-        self.picam = PiCamera()
-        self.picam.rotation = 180
-        # 밝기 70으로 설정
-        # camera.brightness = 70
 
     def capture(self, save_path='../data'):
-        self.picam.start_preview()
-        # 2초후 캡쳐
-        sleep(2)
-        self.picam.capture(save_path + '/image.jpg')
-        self.picam.stop_prview()
+        with PiCamera() as picam:
+            picam.start_preview()
+            sleep(2)
+            picam.capture(save_path + '/image.jpg')
+            picam.stop_preview()
 
         img = plt.imread(save_path + '/image.jpg')
 
