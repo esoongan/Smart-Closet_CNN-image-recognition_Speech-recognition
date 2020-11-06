@@ -43,7 +43,6 @@ class WeatherModule:
 
 
     def request_weather(self):
-
         resp = requests.get(url=self.url, params=self.params)
         data = resp.json()
         if (data['cod'] == 429):  # blocking error code
@@ -61,7 +60,12 @@ class WeatherModule:
             round(data_main['temp_max'], 2),
         ]
         # info: list[도시 이름, 날씨(영어), 날씨 설명(한국어), 현재기온, 최저기온, 최고기온]
-        return info
+
+        weather = "오늘 날씨는 "+ data_weather[0]['description'] +\
+                 ". 현재 기온은 " + str(round(data_main['temp'], 2)) +'도'+\
+                 '. 최저 기온은 '+str(round(data_main['temp_min'], 2))+'도'+\
+                 '. 최고 기온은 '+str(round(data_main['temp_max'], 2))+'도 입니다.'
+        return weather
 
 # data format
 '''
