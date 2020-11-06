@@ -1,7 +1,5 @@
 # from weather.py import WeatherAPI
 
-# weatherAPI = WeatherAPI()
-# weather = weatherAPI.request_weather()
 # 날씨 정보 리스트 게또
 
 
@@ -33,7 +31,7 @@ class WeatherModule:
     def __init__(self):
         # 지역은 울로 고정
         self.city_id = self.city_list[0]['city_id']
-        self.city_name = self.city_list[0]['city_name']
+        self.city_name = self.city_list[0]['name']
         self.params = dict(
             id=self.city_id,
             APPID='cca4a0e8a29e94fe7104d38628c9401a',
@@ -114,3 +112,6 @@ class WeatherModule:
   "cod": 200
   }                         
 '''
+
+weatherAPI = WeatherModule()
+weather = weatherAPI.request_weather()

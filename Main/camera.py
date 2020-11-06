@@ -14,7 +14,7 @@ class CameraModule:
         # 밝기 70으로 설정
         # camera.brightness = 70
 
-    def capture(self, save_path='.'):
+    def capture(self, save_path='../data'):
         self.picam.start_preview()
         # 2초후 캡쳐
         sleep(2)

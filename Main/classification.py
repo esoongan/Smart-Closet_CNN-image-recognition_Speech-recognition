@@ -1,11 +1,13 @@
 from multiprocessing import Process, Queue
 import Color.color as color
 from Main.camera import CameraModule
-
+from Speech.tts import TTS
 
 class Classification:
     def __init__(self):
+        self.save_path = '../data'
         self.camera = CameraModule()
+        self.tts = TTS()
         '''
         shapeNN = 모델 불러오기
         patternNN = 모델 불러오기
@@ -18,15 +20,13 @@ class Classification:
         data_pattern, data_shape = self.camera.capture()
 
         # args=('./capture_img/image.jpg')
-        color_process = Process(target=color.execute, args=('/Users/hayeong/Smart-Classification/SClocal/test_img/img_00000018.jpg', colorQ))
+        color_process = Process(target=color.execute, args=(self.save_path+'/image.jpg', colorQ))
         color_process.start()
-
 
         color_process.join()
 
-        while not colorQ.empty():
-            color_name, w = colorQ.get()
-            print(color_name, w)
+        color_string = colorQ.get()
+        self.tts.synthesize_text(color_string)
 
 
 

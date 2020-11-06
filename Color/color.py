@@ -78,14 +78,19 @@ def execute(img_path, q):
     rgb_tuple_list = get_dominent_rgb(0.6)
 
     result = []
+    ret_string = ""
     rgb, w = rgb_tuple_list[0]
     color_name = converter.rgb_to_name(rgb)
+
+    ret_string = color_name + ' '+ round(w,1)+'퍼, '
+    result.append((color_name, round(w,1)))
 
     if len(rgb_tuple_list) >1:
         for i in range(1, len(rgb_tuple_list), 1):
             rgb, w = rgb_tuple_list[i]
+            color_name = converter.rgb_to_name(rgb)
 
+            ret_string = ret_string + color_name + ' '+ round(w,1)+'퍼'
+            result.append((color_name, round(w,1)))
 
-        result.append(color_name)
-
-    q.put(result)
+    q.put(ret_string)
