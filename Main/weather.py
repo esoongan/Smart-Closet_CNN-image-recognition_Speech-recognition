@@ -1,7 +1,7 @@
 import requests
 
-# 날씨별 옷차림 데이터셋 만들기
 class WeatherModule:
+
     city_list = [
         {'name': 'Seoul', 'city_id': '1835847'},
         {'name': 'Busan', 'city_id': '1838524'},
@@ -33,7 +33,6 @@ class WeatherModule:
             lang='kr',
             units='metric'
         )
-
 
     def request_weather(self):
         resp = requests.get(url=self.url, params=self.params)
