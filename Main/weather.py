@@ -57,7 +57,68 @@ class WeatherModule:
                  ". 현재 기온은 " + str(round(data_main['temp'], 2)) +'도'+\
                  '. 최저 기온은 '+str(round(data_main['temp_min'], 2))+'도'+\
                  '. 최고 기온은 '+str(round(data_main['temp_max'], 2))+'도 입니다.'
-        return weather
+
+
+        temp_mid = int(round(data_main['temp_max'], 2)) - int(round(data_main['temp_min'], 2))
+
+
+
+'''
+        clotheslist = ['민소매, 반팔, 반바지, 치마',
+        '반팔, 얇은 셔츠, 반바지, 면바지',
+        '얇은가지건, 긴팔티, 면바지, 청바지',
+        '얇은니트, 가디거, 맨투맨, 얇은자켓, 면바지, 청바지',
+        '자켓, 가디건, 야상, 맨투맨, 니트, 스타킹, 청바지, 면바지',
+        '코트, 히트텍, 니트, 청바지, 레깅스',
+        '패딩, 두꺼운 코트, 목도리, 기모제품']
+ 내 기억에 tts가 _를 밑줄로 했던 것 같아서 첨에 이거로 하다가 ,를 컴마라고 말할까 두렵소,,
+'''
+
+        
+
+        clotheslist = ['민소매 반팔 반바지 그리고 치마',
+         '반팔 얇은셔츠 반바지 그리고 면바지',
+         '얇은가지건 긴팔티 면바지 그리고 청바지',
+         '얇은니트 가디거 맨투맨 얇은자켓, 면바지, 청바지',
+         '자켓 가디건 야상 맨투맨 니트 스타킹 청바지 그리고 면바지',
+         '코트 히트텍 니트 청바지 그리고 레깅스',
+         '패딩 두꺼운코트 목도리 그리고 기모제품']
+
+
+        recommend_start = '오늘 날씨에는'
+        clothe = ''
+        recommend_end = '을 추천합니다.'
+
+        ㄴif temp_mid >=28:
+          clothe = recommend_start + clotheslist[0] + recommend_end
+          
+        elif temp_mid>= 27 and temp_mid<=23:
+          clothe = recommend_start + clotheslist[1] + recommend_end
+
+        elif temp_mid>=20 and temp_mid<=22:
+          clothe = recommend_start + clotheslist[2] + recommend_end
+        
+        elif temp_mid>= 17 and temp_mid<=19:
+          clothe = recommend_start + clotheslist[3] + recommend_end
+        
+        elif temp_mid>= 12 and temp_mid<=16:
+          clothe = recommend_start + clotheslist[4] + recommend_end
+        
+        elif temp_mid>= 9 and temp_mid<=11:
+          clothe = recommend_start + clotheslist[5] + recommend_end
+        
+        elif temp_mid>= 5 and temp_mid<=8:
+          clothe = recommend_start + clotheslist[6] + recommend_end
+        
+        else:
+          clothe = recommend_start + clotheslist[7] + recommend_end
+
+
+
+
+        return weather, clothe
+
+
 
 # data format
 '''
