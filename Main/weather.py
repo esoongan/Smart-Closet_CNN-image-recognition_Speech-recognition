@@ -116,7 +116,7 @@ class WeatherModule:
 
 
 
-        return weather, clothe
+        return weather+clothe
 
 
 
