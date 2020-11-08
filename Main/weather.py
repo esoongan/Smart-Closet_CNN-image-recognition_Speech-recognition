@@ -59,7 +59,7 @@ class WeatherModule:
                  '. 최고 기온은 '+str(round(data_main['temp_max'], 2))+'도 입니다.'
 
 
-        temp_mid = int(round(data_main['temp_max'], 2)) - int(round(data_main['temp_min'], 2))
+        temp_mid = (int(round(data_main['temp_max'], 2)) + int(round(data_main['temp_min'], 2)))/2
 
 
 
