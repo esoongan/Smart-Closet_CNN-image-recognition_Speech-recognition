@@ -118,11 +118,9 @@ def play(audio_name):
     pygame.mixer.init()
     pygame.mixer.music.load('../data/'+audio_name)
     pygame.mixer.music.play()
-
-    ''' 재생 끝날때까지 기다리는 코드인거 같은데 필요 없을 거같아
+    # 필요해
     while pygame.mixer.music.get_busy() == True:
         continue
-    '''
 
 #################################################################
 """
@@ -143,20 +141,30 @@ def compare(transcript):
     text = transcript.strip()
     text = text.replace(" ", "")
 
-    if text == '안녕':
+    if (flag == 0 and text == '안녕'):
         #전역변수인 flag를 안녕을 함으로써 1로 바꿔줌. 1이 계속 유지되있는상태. 언제 0으로 다시 바꿀것인가..? --> 아래에 추가해놓은부분 주석처리 해놓긴했는데 실제로 테스트해봐야함.
         flag = 1
         play("hello.mp3")       #Clova로 만든 오디오 파일 이름
         #tts.synthesize_text("안녕하세요. 오늘은 어떤옷을 입으시겠어요?")
 
     elif (flag == 1 and '날씨' in text):
-        now = weather.request_weather()
-        tts.synthesize_text(now)
+        w_list = weather.request_weather()
+        # 날씨 + 기온 정보
+        tts.synthesize_text(w_list[0])
+        # 추천 옷차림 정보
+        play(w_list[1])
+        # 추가 멘트: 비 올때, 눈 올때
+        if len(w_list) == 3:
+            play(w_list[2])
 
     elif (flag == 1 and '옷' in text):
         color, pattern, shape = classification.execute()
         tts.synthesize_text("이 옷은 {} {} {}입니다.".format(color, pattern, shape))
 
+    # 고마워 말고 뭐 없나?
+    elif (flag == 1 and '고마워' in text):
+        flag = 0
+        
     elif (flag == 1):
         play("pardon.mp3")
         # tts.synthesize_text("다시한번 말씀해주시겠어요?")
