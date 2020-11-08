@@ -112,6 +112,18 @@ class MicrophoneStream(object):
 
             yield b''.join(data)
 
+'''Clova 음성 파일 재생하는 함수'''
+import pygame
+def play(audio_name):
+    pygame.mixer.init()
+    pygame.mixer.music.load('../data/'+audio_name)
+    pygame.mixer.music.play()
+
+    ''' 재생 끝날때까지 기다리는 코드인거 같은데 필요 없을 거같아
+    while pygame.mixer.music.get_busy() == True:
+        continue
+    '''
+
 #################################################################
 """
  반복해서 계쏙 프린트됫던거 그거는 내가 수정했고 플래그도 달아놨는데 0으로 언제 다시 바꿀지 그 시점만 같이 봐주면 될고가탸!!! 공식문서보고 파라미터들도 수정했으니 함 봐중!
@@ -134,7 +146,8 @@ def compare(transcript):
     if text == '안녕':
         #전역변수인 flag를 안녕을 함으로써 1로 바꿔줌. 1이 계속 유지되있는상태. 언제 0으로 다시 바꿀것인가..? --> 아래에 추가해놓은부분 주석처리 해놓긴했는데 실제로 테스트해봐야함.
         flag = 1
-        tts.synthesize_text("안녕하세요. 오늘은 어떤옷을 입으시겠어요?")
+        play("hello.mp3")       #Clova로 만든 오디오 파일 이름
+        #tts.synthesize_text("안녕하세요. 오늘은 어떤옷을 입으시겠어요?")
 
     elif (flag == 1 and '날씨' in text):
         now = weather.request_weather()
@@ -145,7 +158,8 @@ def compare(transcript):
         tts.synthesize_text("이 옷은 {} {} {}입니다.".format(color, pattern, shape))
 
     elif (flag == 1):
-        tts.synthesize_text("다시한번 말씀해주시겠어요?")
+        play("pardon.mp3")
+        # tts.synthesize_text("다시한번 말씀해주시겠어요?")
 
 
 # api로부터 받은 응답을 받아서 화면에 출력하는 함수
