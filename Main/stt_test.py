@@ -132,6 +132,7 @@ weather = WeatherModule()
 tts = TTS()
 classification = Classification()
 
+# 리턴 0 추가 --> 스피커에서 소리가 나오면 리턴을 하게되고 해당 리턴값으로 다시 tts를 출력.
 def compare(transcript):
 
     # 함수안에서 전역변수 수정하기 - global
@@ -146,6 +147,7 @@ def compare(transcript):
         flag = 1
         play("hello.mp3")       #Clova로 만든 오디오 파일 이름
         #tts.synthesize_text("안녕하세요. 오늘은 어떤옷을 입으시겠어요?")
+        return 0
 
     elif (flag == 1 and '날씨' in text):
         w_list = weather.request_weather()
@@ -156,19 +158,22 @@ def compare(transcript):
         # 추가 멘트: 비 올때, 눈 올때
         if len(w_list) == 3:
             play(w_list[2])
+        return 0
 
     elif (flag == 1 and '옷' in text):
         color, pattern, shape = classification.execute()
         tts.synthesize_text("이 옷은 {} {} {}입니다.".format(color, pattern, shape))
+        return 0
 
     # 고마워 말고 뭐 없나?
     elif (flag == 1 and '고마워' in text):
         flag = 0
-        
+        return 1 ## 종료
+
     elif (flag == 1):
         play("pardon.mp3")
         # tts.synthesize_text("다시한번 말씀해주시겠어요?")
-
+        return 0
 
 # api로부터 받은 응답을 받아서 화면에 출력하는 함수
 def listen_print_loop(responses):
@@ -212,6 +217,14 @@ def listen_print_loop(responses):
 
         #overwrite_chars = ' ' * (num_chars_printed - len(transcript))
 
+        # END_OF_SINGLE_UTTERANCE 이벤트 발생시 stt result text를 반환.
+        # 말의 끝맺음으로써 스트리밍 인식을 종료하도록함. ( 안녕 -->이 말의 끝맺음으로 구글서버가 인식을 못하면 소용이 없긴함...)
+        if response.speech_event_type:
+            #이게 출력된다면 우리가 말한말을 끝맺음이라 판단하고 뒤에나오는 말들은 인식 안함 --> 오디오파일 재생후에 다시 STT호출하는 코드를 추가함
+
+            print('final text: ', transcript)
+            return transcript
+
         """말의 끝맺음이 아니면 --> 막 계속 말하면 is_final이 result에 포함이 안되고 말이 끝낫을때 돌아오는 응답에만 is_final이 포함되서 돌아옴!!! 
         ex) 우리 그래서 뭐먹어 --> 우리, 우리 그래서, 우리 그래서 뭐, 이런식으로 is_final값이 없이 응답이 계속해서 오다가 '우리그래서 뭐먹어' 가 한번에 모두 반환되는 시점의 응답에서 is_final = true가 추가되서 옴! 
         근데 밑에서 파라미터 interim_results = false로 추가해서 이제 중간단계들은 리턴안하고 말 한덩이가 끝날때만 응답이 오도록 바꿈."""
@@ -220,42 +233,45 @@ def listen_print_loop(responses):
 
         # 응답이 있고, 말도 끝났다면? --> 우리가 주로 쓰게될부분!!! (is_final = true)
         if result.is_final:
-            print('me: ', transcript)
+            #(이게 출력되는 중이라면 우리가 말한말이 끝맺음이라고 판단하지 않고 stt계속 대기하는상태
+            print('me (스피커소리 인식할것임ㅜㅜ): ', transcript)
             # 한마디 말하고 그에대한 응답이 compare에서 실행되면 다시 포문으로 돌아가서 다음 말한마디에 대한 compare함수 실행
-            # 리턴이 굳이 필요없음
-            compare(transcript)
+            return transcript
+            # compare(transcript)
 
             #num_chars_printed = 0
 
 
 def main():
-    
-    # See http://g.co/cloud/speech/docs/languages
-    # for a list of supported languages.
-    language_code = 'ko-KR'  # a BCP-47 language tag
-    
-    client = speech.SpeechClient()
-    config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=RATE,
-        language_code=language_code)
-    streaming_config = speech.StreamingRecognitionConfig(
-        config=config,
-        #  single_utterance=True 파라미터 추가함 --> single spoken utterance만 인지해서 응답해줌
-        # 중간에 말을 멈추거나 하면 반환하지 않고 한마디 말이 딱 끝났을때만 반환함, 이걸 추가안하면 중간중간 굳이 반환해주지 않아도 되는것들도 계쏙 반환됨 --> 지연
-        single_utterance=True,
-        # false로 바꿧어. 이렇게 바꾸면 is_final 이 true인것만 반환함
-        interim_results=False)
+    while (True):
+        # See http://g.co/cloud/speech/docs/languages
+        # for a list of supported languages.
+        language_code = 'ko-KR'  # a BCP-47 language tag
 
-    with MicrophoneStream(RATE, CHUNK) as stream:
-        audio_generator = stream.generator()
-        requests = (speech.StreamingRecognizeRequest(audio_content=content)
-                    for content in audio_generator)
+        client = speech.SpeechClient()
+        config = speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=RATE,
+            language_code=language_code)
+        streaming_config = speech.StreamingRecognitionConfig(
+            config=config,
+            #  single_utterance=True 파라미터 추가함 --> single spoken utterance만 인지해서 응답해줌
+            # 중간에 말을 멈추거나 하면 스트리밍인식을 종료함 --> 스피커소리 다시 인식 안하게됨
+            single_utterance=True,
+            # false로 바꿧어. 이렇게 바꾸면 is_final 이 true인것만 반환함
+            interim_results=False)
 
-        responses = client.streaming_recognize(streaming_config, requests)
+        with MicrophoneStream(RATE, CHUNK) as stream:
+            audio_generator = stream.generator()
+            requests = (speech.StreamingRecognizeRequest(audio_content=content)
+                        for content in audio_generator)
 
-        listen_print_loop(responses)
-        
+            responses = client.streaming_recognize(streaming_config, requests)
+
+            transcript = listen_print_loop(responses)
+            value = compare(transcript)
+            if value == 1:  ## 고마워라고 말한경우 인식종료!!!
+                break
 
 
 if __name__ == '__main__':
