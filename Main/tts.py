@@ -38,7 +38,7 @@ class TTS:
     def synthesize_text(self, text):
         """Synthesizes speech from the input string of text."""
         # [api key].json 파일이 있는 경로
-        #os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =\
+        # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =\
         #    "/home/pi/smartcloset/Smart-Classification-28139a960cdf.json"
         input_text = texttospeech.SynthesisInput(text=text)
 

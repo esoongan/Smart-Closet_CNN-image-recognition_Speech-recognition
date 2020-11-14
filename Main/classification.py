@@ -13,6 +13,7 @@ class Classification:
         self.camera = CameraModule()
         self.pattern = Pattern()
         self.shape = Shape()
+        self.save_path = '../data'
 
 
     def execute(self):

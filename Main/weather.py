@@ -66,27 +66,35 @@ class WeatherModule:
         data_main = data['main']
         id = data_weather[0]['id']
 
-        '''
+
         info = [
             self.city_name,
             data_weather[0]['main'],
             data_weather[0]['description'],
-            round(data_main['temp'], 2),
-            round(data_main['temp_min'], 2),
-            round(data_main['temp_max'], 2),
+            data_main['temp'],
+            data_main['temp_min'],
+            data_main['temp_max']
         ]
         # info: list[도시 이름, 날씨(영어), 날씨 설명(한국어), 현재기온, 최저기온, 최고기온]
-        '''
+
 
         i = np.where(self.w_id == id)[0][0]
         description = self.w_ko[i]
 
-        weather = "오늘 날씨는 " + description + \
-                  "입니다. 현재 기온은 " + str(round(data_main['temp'], 2)) + '도' + \
-                  '. 최저 기온은 ' + str(round(data_main['temp_min'], 2)) + '도' + \
-                  '. 최고 기온은 ' + str(round(data_main['temp_max'], 2)) + '도 입니다.'
+        '''
+        weather = description + \
+                  "입니다. 현재 기온은 " + str(round(data_main['temp'], 3)) + '도' + \
+                  '. 최저 기온은 ' + str(round(data_main['temp_min'], 3)) + '도' + \
+                  '. 최고 기온은 ' + str(round(data_main['temp_max'], 3)) + '도 입니다.'
+        '''
 
-        temp_mid = (int(round(data_main['temp_max'], 2)) + int(round(data_main['temp_min'], 2))) / 2
+        weather = description + \
+                  "입니다. 현재 기온은 " + str(info[3]) + '도' + \
+                  '. 최저 기온은 ' + str(info[4]) + '도' + \
+                  '. 최고 기온은 ' + str(info[5]) + '도 입니다.'
+        temp_mid = (info[4]+info[5])/2
+        print(info, temp_mid)
+        #temp_mid = (int(round(data_main['temp_max'], 2)) + int(round(data_main['temp_min'], 2))) / 2
 
         '''
                 clotheslist = ['민소매, 반팔, 반바지, 치마',
@@ -98,14 +106,6 @@ class WeatherModule:
                 '패딩, 두꺼운 코트, 목도리, 기모제품']
          내 기억에 tts가 _를 밑줄로 했던 것 같아서 첨에 이거로 하다가 ,를 컴마라고 말할까 두렵소,,
         '''
-
-        clotheslist = ['민소매 반팔 반바지 그리고 치마',
-                       '반팔 얇은셔츠 반바지 그리고 면바지',
-                       '얇은가지건 긴팔티 면바지 그리고 청바지',
-                       '얇은니트 가디거 맨투맨 얇은자켓, 면바지, 청바지',
-                       '자켓 가디건 야상 맨투맨 니트 스타킹 청바지 그리고 면바지',
-                       '코트 히트텍 니트 청바지 그리고 레깅스',
-                       '패딩 두꺼운코트 목도리 그리고 기모제품']
 
         ret = [weather]
 

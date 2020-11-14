@@ -21,18 +21,18 @@ class CameraModule:
         '''shape용 이미지'''
         img_shape = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_LINEAR)
         data_shape = np.asarray(img_shape)
+        data_shape = np.array([data_shape])     # 차원 하나 추
 
-        '''patter용 이미지'''
-        img_pattern = cv2.resize(img, dsize=(64, 64), interpolation=cv2.INTER_LINEAR)
-        # img_size[0] = 높이, img_size[1] = 너비, img_size[2] = 채널
-        img_size = img.shape
-        img_h_middle = int(img_size[0] / 2)
-        img_w_middle = int(img_size[1] / 2)
 
-        # 패턴이니까 중간부분으로 자르기
-        cropped_pattern = img[img_h_middle - 32:img_h_middle + 32, img_w_middle - 32:img_w_middle + 32]
+        '''pattern용 이미지'''
+        h, w, _ = img.shape
+        pattern_img = img.copy()
+        # 중간부분 크롭한 뒤 resize하기
+        cropped_pattern = pattern_img[int(h * 0.25): int(h * 0.75),
+                int(w * 0.25): int(w * 0.75)]  # [시작 height : 끝 height, 시작 width : 끝 width]
 
         cropped_pattern = cv2.resize(cropped_pattern, dsize=(64, 64), interpolation=cv2.INTER_LINEAR)
         data_pattern = np.asarray(cropped_pattern)
+        data_pattern = np.array([data_pattern])    # 차원 하나 추가
 
         return data_pattern, data_shape

@@ -77,18 +77,20 @@ def execute(img_path, q):
     # 0.6(=baseline) 이상 차지하는 색상이 있으면 그 색상 하나만 리턴
     rgb_tuple_list = get_dominent_rgb(0.6)
 
-    result = []
-    rgb, w = rgb_tuple_list[0]
-    color_name = converter.rgb_to_name(rgb)
+    rgb, w1 = rgb_tuple_list[0]
+    color_name1 = converter.rgb_to_name(rgb)
+    ret_string = color_name1 + '색 '
+    if len(rgb_tuple_list) == 1:
+        q.put(ret_string + str(int( (round(w1, 2) * 100) )) + '퍼, ')
+        return
 
-    ret_string = color_name + '색 '+ str(round(w,1) * 100)+'퍼, '
-    result.append((color_name, round(w,1)))
+    else:
+        rgb, w2 = rgb_tuple_list[1]
+        color_name2 = converter.rgb_to_name(rgb)
+        if color_name1 == color_name2:
+            w = w1 + w2
+            ret_string = ret_string + str(int( (round(w, 2) * 100) )) + '퍼, '
+        else:
+            ret_string = ret_string + str(int( (round(w1, 2) * 100) )) + '퍼, ' + color_name2 + '색 ' + str(int( (round(w2, 2) * 100) )) + '퍼, '
 
-    if len(rgb_tuple_list) >1:
-        for i in range(1, len(rgb_tuple_list), 1):
-            rgb, w = rgb_tuple_list[i]
-            color_name = converter.rgb_to_name(rgb)
-            ret_string = ret_string + color_name + '색 ' + str(round(w, 1) * 100) + '퍼, '
-            result.append((color_name, round(w,1)))
-
-    q.put(ret_string)
+        q.put(ret_string)

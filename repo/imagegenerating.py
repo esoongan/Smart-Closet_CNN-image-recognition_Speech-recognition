@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # import the necessary packages
-from keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import img_to_array
-from keras.preprocessing.image import load_img
-import tensorflow as tf
+from keras_preprocessing.image import ImageDataGenerator
+from keras_preprocessing.image import img_to_array
+from keras_preprocessing.image import load_img
+
 # from imutils import paths
 import argparse
 import numpy as np
@@ -32,10 +32,10 @@ aug = ImageDataGenerator(
     rotation_range=30,
     width_shift_range=0.1,
     height_shift_range=0.1,
-    shear_range=0.2,
+    #shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True,
-    fill_mode="nearest",
+    fill_mode="wrap",
 )
 
 

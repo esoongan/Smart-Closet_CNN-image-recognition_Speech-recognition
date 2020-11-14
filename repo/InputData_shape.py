@@ -10,7 +10,7 @@ BASE_PATH = "/Users/iseungjin/2020_3_2/capstone/inputdata"
 # pattern_dir : 각각의 패턴폴더를 담은 폴더
 # shape_dir : 종류폴더
 # 중요 - 각 폴더별로 이미지갯수 비슷해야함!!!!!
-shape_dir = BASE_PATH + "/shape"
+shape_dir = '/Users/hayeong/Desktop/Capstone/DeepFashion DB/final_pattern_dir'
 # ex) categories = ['flora', 'checked', 'stripe']
 
 categories = os.listdir(shape_dir)
@@ -70,7 +70,7 @@ xy = (X_train/255.0, X_test/255.0, y_train, y_test)
 
 # 여기서 저장된 image_data_npy파일을 불러서 이걸로 학습을 시키면 됨.
 # ex ) X_train, X_test, y_train, y_test = np.load(BASE_PATH + '/image_data.npy') 이렇게 해서 불러오고 코딩하면댐!
-np.save(BASE_PATH + '/image_data_shape', xy)
+np.save('/Users/hayeong/Downloads/image_data_pattern', xy)
 
 
 # 패턴폴더안에 각각의 패턴이 존재 - 그것들이 카테고리가 됨 ( 카테고리의 개수는 정답레이블의 원소개수)
