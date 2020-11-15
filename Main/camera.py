@@ -1,7 +1,7 @@
 # picamera 설치 후 사용하기
 # sudo apt-get install python3-picamera
 
-from picamera import PiCamera
+#from picamera import PiCamera
 from time import sleep
 import cv2  # opencv 3.4.2+ required
 import numpy as np
@@ -10,11 +10,17 @@ import matplotlib.pyplot as plt
 class CameraModule:
 
     def capture(self, save_path='../data'):
+        '''
         with PiCamera() as picam:
             picam.start_preview()
             sleep(2)
             picam.capture(save_path + '/image.jpg')
             picam.stop_preview()
+        '''
+        cap =cv2.VideoCapture(0)
+        ret,frame = cap.read()
+        cv2.imwrite(save_path+'/image.jpg')
+        cap.release()
 
         img = plt.imread(save_path + '/image.jpg')
 
