@@ -17,9 +17,9 @@ class CameraModule:
             picam.capture(save_path + '/image.jpg')
             picam.stop_preview()
         '''
-        cap =cv2.VideoCapture(0)
+        cap =cv2.VideoCapture(1)#0
         ret,frame = cap.read()
-        cv2.imwrite(save_path+'/image.jpg')
+        cv2.imwrite(save_path+'/image.jpg',frame)
         cap.release()
 
         img = plt.imread(save_path + '/image.jpg')
