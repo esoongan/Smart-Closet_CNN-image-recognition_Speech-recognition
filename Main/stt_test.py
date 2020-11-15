@@ -43,8 +43,8 @@ from classification import Classification
 
 
 # Audio recording parameters
-RATE = 16000
-CHUNK = int(RATE/10)  # 100ms
+RATE = 44100#16000
+CHUNK = 4096#int(RATE/10)  # 100ms
 
 
 class MicrophoneStream(object):
@@ -69,6 +69,7 @@ class MicrophoneStream(object):
             # This is necessary so that the input device's buffer doesn't
             # overflow while the calling thread makes network requests, etc.
             stream_callback=self._fill_buffer,
+            input_device_index = 1
         )
 
         self.closed = False
